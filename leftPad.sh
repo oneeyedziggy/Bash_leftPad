@@ -5,18 +5,18 @@ padStr=$1
 padLen=$2
 #echo ${padLen}
 
-padChar=($3 0)
+padChar=("$3" 0)
 #echo ${padChar}
 
 re='^[0-9]+$'
-if ! [[ ${padLen} =~ $re ]] ; then
-   echo "error: Not a number" >&2;
+if [[ ! ${padLen} =~ $re ]] ; then
+   echo "error: \$2 is not a number" >&2;
    exit 1
 fi
 
-padStr=$(printf "${padChar}%.0s" $(seq 1 ${padLen}))${padStr}
+padStr=$(printf "${padChar[0]}%.0s" $(seq 1 ${padLen}))${padStr}
 
 #this would work too
 #echo ${padStr:$(( ${#padStr} - ${padLen} )):${padLen}}
-echo ${padStr} | grep -Eo .\{0,${padLen}\}$
+echo "${padStr}" | grep -Eo .\{0,${padLen}\}$
 exit 0
